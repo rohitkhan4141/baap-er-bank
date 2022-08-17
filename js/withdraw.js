@@ -1,22 +1,21 @@
-const withdrawBlock = document.getElementById("withdraw");
-// const totalAmountSelector = document.getElementById("total-amount");
-const withdrawInput = document.getElementById("withdraw-input");
-const withdrawBtn = document.getElementById("btn-withdraw");
+document.getElementById("btn-withdraw").addEventListener("click", () => {
+  let prevwithdrawAmount = dataFromElement("withdraw");
+  const newWithdrawAmount = dataFromInputfield("withdraw-input");
+  let prevTotalAmount = dataFromElement("total-amount");
 
-withdrawBtn.addEventListener("click", () => {
-  const newwithdrawAmount = parseFloat(withdrawInput.value);
-  withdrawInput.value = "";
-  if (isNaN(newwithdrawAmount) === true) {
+  if (isNaN(newWithdrawAmount) === true) {
     alert("please enter a number");
     return;
   }
-  let prevwithdrawAmount = parseFloat(withdrawBlock.innerHTML);
-  const totalwithdrawAmount = newwithdrawAmount + prevwithdrawAmount;
-  withdrawBlock.innerHTML = totalwithdrawAmount;
+  if (newWithdrawAmount > prevTotalAmount) {
+    alert("not sufficient funds");
+    return;
+  }
+  const totalwithdrawAmount = newWithdrawAmount + prevwithdrawAmount;
+  setDataIntoElement("withdraw", totalwithdrawAmount);
   //total amount
-  let prevTotalAmount = parseFloat(totalAmountSelector.innerText);
-  let totalAmount = prevTotalAmount - newwithdrawAmount;
-  totalAmountSelector.innerText = totalAmount;
+  let totalAmount = prevTotalAmount - newWithdrawAmount;
+  setDataIntoElement("total-amount", totalAmount);
 });
 
 document.getElementById("btn-logout").addEventListener("click", () => {
